@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS `account` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(30) NOT NULL DEFAULT '',
+  `password` varchar(45) NOT NULL DEFAULT '',
+  `social_id` varchar(7) NOT NULL DEFAULT '',
+  `email` varchar(64) NOT NULL DEFAULT '',
+  `create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `is_testor` tinyint(1) NOT NULL DEFAULT '0',
+  `status` varchar(8) NOT NULL DEFAULT 'OK',
+  `availDt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `mileage` int(11) NOT NULL DEFAULT '0',
+  `gold_expire` datetime NOT NULL DEFAULT '2014-01-01 00:00:00',
+  `silver_expire` datetime NOT NULL DEFAULT '2014-01-01 00:00:00',
+  `safebox_expire` datetime NOT NULL DEFAULT '2014-01-01 00:00:00',
+  `autoloot_expire` datetime NOT NULL DEFAULT '2014-01-01 00:00:00',
+  `fish_mind_expire` datetime NOT NULL DEFAULT '2014-01-01 00:00:00',
+  `marriage_fast_expire` datetime NOT NULL DEFAULT '2014-01-01 00:00:00',
+  `money_drop_rate_expire` datetime NOT NULL DEFAULT '2014-01-01 00:00:00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `login` (`login`),
+  KEY `social_id` (`social_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=big5;
