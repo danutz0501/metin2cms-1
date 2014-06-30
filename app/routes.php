@@ -12,3 +12,16 @@
 */
 
 Route::get('/', 'HomeController@index');
+
+Route::group(array('prefix' => 'account'), function () {
+    Route::get('create', array('uses' => 'AccountController@store'));
+    Route::post('create', array('uses' => 'AccountController@create'));
+    Route::get('login', array('uses' => 'AccountController@login')); 
+    Route::post('login', array('uses' => 'AccountController@doLogin'));
+    Route::get( 'confirm/{code}', array('uses' => 'AccountController@confirm'));
+    Route::get('forgot-password', array('uses' => 'AccountController@forgotPassword'));
+    Route::post('forgot-password', array('uses' => 'AccountController@doForgotPassword'));
+    Route::get('reset-password', array('uses' => 'AccountController@resetPassword'));    
+    Route::post('reset-password', array('uses' => 'AccountController@doResetPassword'));    
+    Route::get( 'logout', array('uses' => 'AccountController@logout'));
+});

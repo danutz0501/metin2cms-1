@@ -17,14 +17,16 @@ class PlayerRepository extends AbstractRepository implements PlayerRepositoryInt
 
 	public function find($id)
 	{
-		$data = $this->model->find($id);
+		$result = $this->model->find($id);
 
-		return $data != NULL ? $data->toArray() : NULL;
+		return $result != NULL ? $data->toArray() : NULL;
 	}
 
 	public function findByName($name)
 	{
-		return $this->model->where('name', '=', $name)->first()->toArray();
+		$result = $this->model->where('name', '=', $name)->first();
+
+		return $result != NULL ? $result->toArray() : NULL;
 	}
 
 	public function findByAccount($account)
