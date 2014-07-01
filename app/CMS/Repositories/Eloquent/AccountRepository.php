@@ -1,5 +1,6 @@
 <?php namespace CMS\Repositories\Eloquent;
 
+use CMS\Services\Forms\RegistrationForm;
 use CMS\Repositories\AccountRepositoryInterface;
 use CMS\Repositories\PlayerRepositoryInterface;
 use CMS\Repositories\Eloquent\Account as Model;
@@ -16,9 +17,14 @@ class AccountRepository extends AbstractRepository implements AccountRepositoryI
 
 	public function create(array $data = array())
 	{
-		if (isset($data['password'])) // Just to be sure
+        if (isset($data['submit']))
+        {
+            unset($data['submit']);
+        }
+        
+		if (!empty($data['password'])) // Just to be sure
 		{
-			$data['password'] = General::passwordHash($data['password']);
+            $data['password'] = General::passwordHash($data['password']);
 		}
 
 		return $this->model->create($data)->toArray();	
@@ -48,7 +54,7 @@ class AccountRepository extends AbstractRepository implements AccountRepositoryI
 		return $this->player->findByAccount($accountId);
 	}
 
-	public function newSocialID($accountId)
+	public function socialID($accountId)
 	{
 
 	}
@@ -58,4 +64,9 @@ class AccountRepository extends AbstractRepository implements AccountRepositoryI
 		$user = $this->model->where('id', '=', $account)
                              ->where('password', '=', $password)->get();
 	}
+    
+    public function getRegistrationForm()
+    {
+        return app('CMS\Services\Forms\RegistrationForm');
+    }
 }

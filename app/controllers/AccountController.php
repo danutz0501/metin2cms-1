@@ -1,21 +1,44 @@
 <?php
 use CMS\Repositories\Eloquent\AccountRepository as Account;
 
-class AccountController extends Controller {
+class AccountController extends BaseController {
     
-    public function __construct(Account $user)
+    public function __construct(Account $account)
     {
-        
+        $this->account = $account;
     }
     
     public function create()
     {
-        // create account form
+        // create account form - tmp as I make some tests
+        
+        echo '<pre>';
+        print_r(Session::all());
+        
+        $form = '<form action="'.route('account.store').'" method="post">';
+        $form .= 'Email: <input type="text" name="email"/><br/>';
+        $form .= 'Username: <input type="text" name="username"/><br/>';
+        $form .= 'Password: <input type="text" name="password"/><br/>';
+        $form .= 'Security code: <input type="text" name="captcha"/><br/>';
+        $form .= '<input type="submit" name="submit"/>';
+        $form .= '</div>';
+        
+        return $form;
     }
     
     public function store()
     {
-       // add to database & redirect after creation
+        $form = $this->account->getRegistrationForm();
+        
+        if ( ! $form->isValid())
+        {
+            return $this->redirectBack(array('errors' => $form->getErrors()));
+        }
+        
+        if ($this->account->create($form->getInputData()))
+        {
+            $this->redirectRoute('home');
+        }
     }
     
     public function login()
